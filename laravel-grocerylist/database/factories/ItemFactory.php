@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Item;
+use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -21,6 +22,7 @@ class ItemFactory extends Factory
             //
             'name' => $this->faker->word(),
             'description' => $this->faker->sentence(),
+            'category_id' => Category::inRandomOrder()->first()->id,
         ];
     }
 }

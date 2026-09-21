@@ -14,7 +14,7 @@
 
         <div class="field-group">
             <label for="description">Beschrijving:</label>
-            <textarea id="description" name="description">{{ $item->description }}</textarea>
+            <textarea id="description" name="description"><?php echo e($item->description); ?></textarea>
         </div>
 
         <div class="field-group">

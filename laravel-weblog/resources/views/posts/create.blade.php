@@ -4,7 +4,8 @@
 
 @section('content')
     <h1>Create a new post</h1>
-    <form class="post-form" action="{{ 'route.store' }}" method="POST">
+    <form class="post-form" action="{{ route('posts.store') }}" method="POST">
+        @csrf
         <div class="field-group">
             <label for="title">Titel</label>
             <input type="text" name="title" id="title" required>

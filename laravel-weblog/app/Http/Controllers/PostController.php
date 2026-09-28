@@ -30,7 +30,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $post = new Post();
+        $post->title = $request->input('title');
+        $post->content = $request->input('content');
+        $post->abstract = $request->input('abstract') ?? "No abstract provided yet";
+        $post->save();
+
+        return redirect()->route('posts.index');
+
     }
 
     /**
@@ -38,8 +45,6 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        // !!! FIX MODEL ROUTE BINDING AND MAKE BLADE
-        dd($post); 
         return view('posts.show', compact('post'));
     }
 
@@ -62,8 +67,11 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    // public function destroy(string $id) = w/o route model binding
+    public function destroy(Post $post)
+
     {
-        // ADD DELETE FUNCTION!!!
+        $post->delete();
+        return redirect()->route('posts.index');
     }
 }

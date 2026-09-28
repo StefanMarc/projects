@@ -4,26 +4,28 @@
 
 @section('content')
     <h1>Posts</h1>
+
     @foreach ($posts as $post)
-        <!-- !!! ADD ACTION posts.show !!! -->
-        <a class="post-link">
-            <article>
-                <h2>{{ $post->title }}</h2>
-                <time datetime="{{ $post->created_at->toISOString() }}">
-                    {{ $post->created_at->format('d-m-Y H:i') }}
-                </time>
-            </article>
+        <article class="post-card">
+            <a class="post-link" href="{{ route('posts.show', $post) }}">
+                <div class="post-summary">
+                    <h2>{{ $post->title }}</h2>
+                    <time datetime="{{ $post->created_at->toISOString() }}">
+                        {{ $post->created_at->format('d-m-Y H:i') }}
+                    </time>
+                </div>
+            </a>
+
             <div class="actions">
                 <form action="{{ route('posts.destroy', $post) }}" method="POST">
                     @csrf
                     @method('DELETE')
                     <button class="delete-button">Delete</button>
                 </form>
-                <form action="{{ route('posts.edit', $post) }}" method="POST">
+                <form>
                     <button class="edit-button">Edit</button>
                 </form>
             </div>
-        </a>
-
+        </article>
     @endforeach
 @endsection

@@ -1,10 +1,6 @@
 <nav>
     <ul>
-        {{--
-       <li><a href="{{ route('items.index') }}">Item List</a></li>
-       <li><a href="{{ route('items.create') }}">Create Item</a></li>
-       --}}
-       <li><a href="{{ route('posts.index') }}">Post List</a></li>
-       <li><a href="{{ route('posts.create') }}">Create Post</a></li>
+       <li><a href="{{ route('posts.index') }}">Home</a></li>
+       <li><a href="{{ route('posts.create') }}">Write a new post</a></li>
     </ul>
 </nav>

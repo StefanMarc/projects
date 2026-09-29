@@ -15,4 +15,9 @@ class Post extends Model
         // Pivot table: category_post
         return $this->belongsTo(Category::class);
     }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

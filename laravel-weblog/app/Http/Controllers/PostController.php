@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Comment;
+
+// for testing:
+use Illuminate\Support\Facades\DB;
 
 class PostController extends Controller
 {
@@ -45,7 +49,17 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show', compact('post'));
+        // first method, works
+        // $comments = DB::table('comments')
+        // ->where('post_id', '=', $post->id)
+        // ->get();
+
+        // second method, also works
+        $comments = $post->comments()->orderBy('created_at', 'desc')->get();
+
+        // dd($comments);
+
+        return view('posts.show', compact('post', 'comments'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CommentController;
 use App\Models\Post;
 
 // We voegen ook een redirect toe aan de routes die de hoofdpagina doorverwijst naar de '/posts' route
@@ -21,3 +22,11 @@ Route::get('/posts/{post}', [PostController::class, 'show'])->name('posts.show')
 
 Route::delete('/posts/{post}', [PostController::class, 'destroy'])->name('posts.destroy');
 
+
+// COMMENT CONTROLLER ROUTER
+
+Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment.store');
+
+// USER AND SIGN-IN
+
+Route::get('/login', function() {return view('auth/login');})->name('auth.login');

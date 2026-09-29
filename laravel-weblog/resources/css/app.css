@@ -140,3 +140,97 @@ button:hover {
     margin: 0;
     line-height: 1.6;
 }
+
+.post-form {
+    width: min(100%, 360px);
+    margin: 2rem auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: left;
+}
+
+.field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    margin-bottom: 1rem;
+}
+
+.field-group input,
+.field-group textarea {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.5rem;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    font: inherit;
+}
+
+.field-group textarea {
+    min-height: 6rem;
+    resize: vertical;
+}
+
+.comments-wrapper, .create-comment {
+    width: min(100%, 760px);
+    box-sizing: border-box;
+    margin: 0 auto 1rem;
+    padding: 0 1rem 2rem;
+}
+
+.comments {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.comment {
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #f9f9f9;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
+}
+
+.comment p {
+    margin: 0 0 0.75rem;
+    line-height: 1.6;
+}
+
+.comment-meta {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+}
+
+.comment-author {
+    font-weight: bold;
+}
+
+.comment time {
+    display: block;
+    margin-left: auto;
+    color: #555;
+    font-size: 0.85rem;
+}
+
+.field-group #comment {
+    min-height: 3rem;
+    resize: vertical;
+}
+
+.create-comment h2 {
+    text-align: center;
+}
+
+.login-form {
+    width: min(100%, 360px);
+    margin: 2rem auto;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: left;
+}

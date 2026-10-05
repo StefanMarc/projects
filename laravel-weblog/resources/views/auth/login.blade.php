@@ -4,11 +4,11 @@
 
 @section('content')
    <h1>login page</h1>
-   <form class="login-form" action="" method="">
+   <form class="login-form" action="{{ route('authenticate') }}" method="POST">
         @csrf
         <div class="field-group">
-            <label for="username">Email</label>
-            <input type="text" name="username" id="username" required>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required value="{{ old('email') }}">
         </div>
 
         <div class="field-group">
@@ -17,6 +17,15 @@
         </div>
 
         <button type="submit">Log in</button>
-
     </form>
+
+    @if ($errors->any())
+        <div class="error-messages">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
 @endsection

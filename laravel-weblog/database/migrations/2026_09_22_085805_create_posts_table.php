@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('content');
             // add foreign key to categories table
             // add foreign key to users table
+            $table->foreignId('user_id'); //->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

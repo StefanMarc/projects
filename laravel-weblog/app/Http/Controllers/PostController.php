@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Post;
+use App\Models\User;
 use App\Models\Comment;
 
 // for testing:
@@ -87,5 +89,17 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->route('posts.index');
+    }
+
+    public function myPosts(User $user)
+    {
+        // ADD ROUTE MODEL BINDING!
+
+
+        // $user = Auth::user();
+
+        $posts = $user->posts()->orderBy('created_at', 'desc')->get();
+
+        return view('posts.index', compact('posts'));
     }
 }

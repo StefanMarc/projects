@@ -16,16 +16,21 @@
                 </div>
             </a>
 
-            <div class="actions">
-                <form action="{{ route('posts.destroy', $post) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button class="delete-button">Delete</button>
-                </form>
-                <form>
-                    <button class="edit-button">Edit</button>
-                </form>
-            </div>
+            @auth
+                @if (Auth::id() === $post->user_id)
+                    <div class="actions">
+                        <form action="{{ route('posts.destroy', $post) }}" method="POST">
+                            @csrf
+                            @method('DELETE')
+                            <button class="delete-button">Delete</button>
+                        </form>
+                        <form action="" method="GET">
+                            @csrf
+                            <button class="edit-button">Edit</button>
+                        </form>
+                    </div>
+                @endif
+            @endauth
         </article>
     @endforeach
 @endsection

@@ -3,12 +3,20 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\LoginController;
 use App\Models\Post;
 
 // We voegen ook een redirect toe aan de routes die de hoofdpagina doorverwijst naar de '/posts' route
 Route::redirect('/', '/posts');
 
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+
+// DOES NOT WORK!
+Route::get('/posts/{user}', [PostController::class, 'myPosts'])->middleware(['auth'])->name('my.posts');
+
+// Use a dedicated users route to enable route model binding without colliding
+// with the `/posts/{post}` parameter route or static segments like `/posts/create`.
+Route::get('/users/{user}/posts', [PostController::class, 'myPosts'])->name('my.posts');
 
 Route::get('/posts/create', [PostController::class, 'create'])->name('posts.create');
 
@@ -29,4 +37,10 @@ Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment
 
 // USER AND SIGN-IN
 
-Route::get('/login', function() {return view('auth/login');})->name('auth.login');
+Route::get('/login', [LoginController::class, 'index'])->name('login');
+
+Route::post('/login', [LoginController::class, 'authenticate'])->name('authenticate');
+
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth'])->name('dashboard');

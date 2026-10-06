@@ -19,7 +19,7 @@ class PostController extends Controller
     public function index()
     {
         // $posts = Post::all();
-        $posts = Post::orderBy('created_at', 'desc')->get();
+        $posts = Post::with('category')->orderBy('created_at', 'desc')->get();
         return view('posts.index', compact('posts'));
     }
 
@@ -28,7 +28,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create');
+        return view('posts.create', ['post' => new Post()]);
     }
 
     /**
@@ -39,7 +39,7 @@ class PostController extends Controller
         $post = new Post();
         $post->title = $request->input('title');
         $post->content = $request->input('content');
-        $post->abstract = $request->input('abstract') ?? "No abstract provided yet";
+        $post->user_id = Auth::id();
         $post->save();
 
         return redirect()->route('posts.index');
@@ -67,17 +67,18 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        return view('posts.edit', compact('post'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $post->update($request->all());
+        return redirect()->route('posts.show', $post);
     }
 
     /**
@@ -87,19 +88,19 @@ class PostController extends Controller
     public function destroy(Post $post)
 
     {
+        
         $post->delete();
         return redirect()->route('posts.index');
     }
 
-    public function myPosts(User $user)
+    // Working method to show the posts of the logged-in user
+    public function myPosts(Request $request)
     {
-        // ADD ROUTE MODEL BINDING!
+        $user = $request->user();
 
-
-        // $user = Auth::user();
-
-        $posts = $user->posts()->orderBy('created_at', 'desc')->get();
+        $posts = $user->posts()->with('category')->orderBy('created_at', 'desc')->get();
 
         return view('posts.index', compact('posts'));
     }
+
 }

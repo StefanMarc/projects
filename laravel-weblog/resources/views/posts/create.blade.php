@@ -6,17 +6,10 @@
     <h1>Create a new post</h1>
     <form class="post-form" action="{{ route('posts.store') }}" method="POST">
         @csrf
-        <div class="field-group">
-            <label for="title">Titel</label>
-            <input type="text" name="title" id="title" required>
+        
+        @include('partials.post-form-fields', ['post' => $post])
+
+            <a class="button-like" id="cancel-button" href="{{ route('posts.index') }}">Cancel</a>
         </div>
-
-        <div class="field-group">
-            <label for="content">Content</label>
-            <textarea name="content" id="content" required placeholder="enter your text here:"></textarea>
-        </div>
-
-        <button type="submit">Opslaan</button>
-
     </form>
 @endsection

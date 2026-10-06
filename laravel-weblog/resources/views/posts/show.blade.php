@@ -10,8 +10,10 @@
                 {{ $post->created_at->format('d-m-Y H:i') }}
             </time>
             <p>{{ $post->content }}</p>
+            @include('partials.auth-actions')
         </article>
     </section>
+
 
     <section class="create-comment">
         <h2>Write a comment</h2>

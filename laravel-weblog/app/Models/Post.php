@@ -9,6 +9,12 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'title',
+        'content',
+        'category_id',
+    ];
+
     public function category()
     {
         // change later so that a post can have multiple categories

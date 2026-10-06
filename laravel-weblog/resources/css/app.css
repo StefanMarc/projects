@@ -30,7 +30,11 @@ nav a:hover {
     color: #032f7a;
 }
 
-button {
+button,
+.button-like {
+    display: inline-block;
+    box-sizing: border-box;
+    min-width: 5.75rem;
     padding: 0.5rem 1rem;
     border: 0;
     border-radius: 4px;
@@ -38,10 +42,21 @@ button {
     color: white;
     cursor: pointer;
     font: inherit;
+    text-align: center;
+    text-decoration: none;
 }
 
-button:hover {
+button:hover,
+.button-like:hover {
     background-color: #032f7a;
+}
+
+#cancel-button {
+    background-color: #b42318;
+}
+
+#cancel-button:hover {
+    background-color: #7a271a;
 }
 
 .post-card {
@@ -69,14 +84,31 @@ button:hover {
 }
 
 .post-summary {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) max-content;
+    align-items: start;
     gap: 1rem;
+}
+
+.post-heading {
+    min-width: 0;
 }
 
 .post-summary h2 {
     margin: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.post-category {
+    margin: 0.25rem 0 0;
+    color: #555;
+    font-size: 0.875rem;
+}
+
+.post-summary time {
+    white-space: nowrap;
 }
 
 .actions {
@@ -85,11 +117,6 @@ button:hover {
     gap: 0.5rem;
     box-sizing: border-box;
     margin-top: 1rem;
-}
-
-.actions button {
-    padding: 0.35rem 0.7rem;
-    font-size: 0.85rem;
 }
 
 .edit-button {
@@ -142,7 +169,8 @@ button:hover {
 }
 
 .post-form {
-    width: min(100%, 360px);
+    box-sizing: border-box;
+    width: min(100%, 60rem);
     margin: 2rem auto;
     padding: 1rem;
     border: 1px solid #ccc;
@@ -168,7 +196,7 @@ button:hover {
 }
 
 .field-group textarea {
-    min-height: 6rem;
+    min-height: 20rem;
     resize: vertical;
 }
 
@@ -233,4 +261,14 @@ button:hover {
     border: 1px solid #ccc;
     border-radius: 6px;
     text-align: left;
+}
+
+.error-messages {
+    width: min(100%, 450px);
+    margin: 0 auto 1rem;
+    padding: 0.5rem;
+    border: 1px solid #b42318;
+    border-radius: 4px;
+    background-color: #f9d6d5;
+    color: #b42318;
 }

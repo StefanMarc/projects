@@ -15,11 +15,12 @@ class Post extends Model
         'category_id',
     ];
 
-    public function category()
+    public function categories()
     {
+        return $this->belongsToMany(Category::class);
         // change later so that a post can have multiple categories
         // Pivot table: category_post
-        return $this->belongsTo(Category::class);
+        // return $this->belongsTo(Category::class);
     }
 
     public function comments()

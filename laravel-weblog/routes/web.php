@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginController;
 use App\Models\Post;
@@ -35,6 +36,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/posts/{post}/edit', 'edit')->name('posts.edit');
         Route::put('/posts/{post}', 'update')->name('posts.update');
         Route::delete('/posts/{post}', 'destroy')->name('posts.destroy');
+    });
+
+    // CategoryController routes
+    Route::controller(CategoryController::class)->group(function () {
+        // Index
+        Route::get('/categories', 'index')->name('categories.index');
+        // Creating and storing categories
+        Route::post('/categories', 'store')->name('categories.store');
+        // Deleting categories
+        Route::delete('/categories/{category}', 'destroy')->name('categories.destroy');
     });
     
 });

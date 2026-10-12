@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
@@ -19,7 +20,7 @@ class PostController extends Controller
     public function index()
     {
         // $posts = Post::all();
-        $posts = Post::with('category')->orderBy('created_at', 'desc')->get();
+        $posts = Post::with('categories')->orderBy('created_at', 'desc')->get();
         return view('posts.index', compact('posts'));
     }
 
@@ -28,7 +29,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        return view('posts.create', ['post' => new Post()]);
+        $categories = Category::all();
+        return view('posts.create', ['post' => new Post()], compact('categories'));
     }
 
     /**
@@ -98,7 +100,7 @@ class PostController extends Controller
     {
         $user = $request->user();
 
-        $posts = $user->posts()->with('category')->orderBy('created_at', 'desc')->get();
+        $posts = $user->posts()->with('categories')->orderBy('created_at', 'desc')->get();
 
         return view('posts.index', compact('posts'));
     }

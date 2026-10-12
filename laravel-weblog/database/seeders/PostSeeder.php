@@ -26,6 +26,11 @@ class PostSeeder extends Seeder
                 ];
             }
         )
-        ->create();
+        ->create()
+        ->each(function (Post $post) {
+            // attach random categories to the post
+            $categories = \App\Models\Category::inRandomOrder()->take(rand(1, 3))->pluck('id');
+            $post->categories()->attach($categories);
+        });
     }
 }

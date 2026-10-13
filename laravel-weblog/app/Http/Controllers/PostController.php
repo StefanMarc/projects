@@ -17,11 +17,20 @@ class PostController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $posts = Post::all();
-        $posts = Post::with('categories')->orderBy('created_at', 'desc')->get();
-        return view('posts.index', compact('posts'));
+        $title = 'All Posts';
+
+        $categories = Category::all();
+
+        $selectedCategories = $request->query('categories', []);
+
+        $postsQuery = Post::with('categories')->orderBy('created_at', 'desc');
+        $postsQuery = $this->filterByCategories($postsQuery, $selectedCategories);
+
+        $posts = $postsQuery->get();
+
+        return view('posts.index', compact('posts', 'categories', 'title'));
     }
 
     /**
@@ -43,6 +52,7 @@ class PostController extends Controller
         $post->content = $request->input('content');
         $post->user_id = Auth::id();
         $post->save();
+        $post->categories()->attach($request->input('categories', []));
 
         return redirect()->route('posts.index');
 
@@ -71,7 +81,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact('post'));
+        $categories = Category::all();
+        return view('posts.edit', compact('post', 'categories'));
     }
 
     /**
@@ -80,6 +91,8 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         $post->update($request->all());
+        $post->categories()->sync($request->input('categories', []));
+        // dd($request->all());
         return redirect()->route('posts.show', $post);
     }
 
@@ -90,7 +103,6 @@ class PostController extends Controller
     public function destroy(Post $post)
 
     {
-        
         $post->delete();
         return redirect()->route('posts.index');
     }
@@ -98,11 +110,32 @@ class PostController extends Controller
     // Working method to show the posts of the logged-in user
     public function myPosts(Request $request)
     {
+        $title = 'My Posts';
+
+        $categories = Category::all();
+
         $user = $request->user();
 
-        $posts = $user->posts()->with('categories')->orderBy('created_at', 'desc')->get();
+        $postsQuery = $user->posts()->with('categories')->orderBy('created_at', 'desc');
 
-        return view('posts.index', compact('posts'));
+        $selectedCategories = $request->query('categories', []);
+
+        $postsQuery = $this->filterByCategories($postsQuery, $selectedCategories);
+
+        $posts = $postsQuery->get();
+
+        return view('posts.index', compact('posts', 'categories', 'title'));
+    }
+
+    private function filterByCategories($postsQuery, array $selectedCategories)
+    {
+        if (!empty($selectedCategories)) {
+            $postsQuery->whereHas('categories', function ($query) use ($selectedCategories) {
+                $query->whereIn('category_id', $selectedCategories);
+            }, '>=', count($selectedCategories));
+        }
+
+        return $postsQuery;
     }
 
 }

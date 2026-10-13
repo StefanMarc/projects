@@ -3,6 +3,20 @@ body {
     font-family: monospace;
 }
 
+:root {
+    --sticky-nav-top: 1rem;
+    --sticky-nav-height: 3.5rem;
+    --sticky-content-gap: 1rem;
+}
+
+.layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 60rem) minmax(0, 1fr);
+    width: 100%;
+    gap: 1rem;
+    margin-inline: auto;
+}
+
 h1 {
     margin-bottom: 1rem;
     font-size: 2rem;
@@ -12,13 +26,40 @@ h1 {
 
 nav {
     text-align: left;
+    position: sticky;
+    top: var(--sticky-nav-top);
+}
+
+.nav-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    height: var(--sticky-nav-height);
 }
 
 nav ul {
     display: flex;
+    align-items: center;
+    flex-wrap: wrap;
     gap: 1rem;
+    margin: 0;
     padding: 0;
     list-style: none;
+}
+
+.nav-links {
+    flex: 1;
+}
+
+.nav-auth {
+    flex-shrink: 0;
+    margin-left: auto;
+}
+
+.nav-auth form {
+    margin: 0;
 }
 
 nav a {
@@ -34,6 +75,7 @@ button,
 .button-like {
     display: inline-block;
     box-sizing: border-box;
+    margin-block: 0.5rem;
     min-width: 5.75rem;
     padding: 0.5rem 1rem;
     border: 0;
@@ -116,7 +158,6 @@ button:hover,
     flex-shrink: 0;
     gap: 0.5rem;
     box-sizing: border-box;
-    margin-top: 1rem;
 }
 
 .edit-button {
@@ -168,7 +209,8 @@ button:hover,
     line-height: 1.6;
 }
 
-.post-form {
+.post-form,
+.category-form {
     box-sizing: border-box;
     width: min(100%, 60rem);
     margin: 2rem auto;
@@ -178,11 +220,40 @@ button:hover,
     text-align: left;
 }
 
+.category-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    box-sizing: border-box;
+    width: min(100%, 60rem);
+    margin: 0 auto 1rem;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background: #f9f9f9;
+}
+
+.category-heading h2 {
+    margin: 0;
+}
+
+.category-actions {
+    flex-shrink: 0;
+}
+
+.category-actions form {
+    margin: 0;
+}
+
 .field-group {
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
-    margin-bottom: 1rem;
+}
+
+.field-group + .field-group {
+    margin-top: 1rem;
 }
 
 .field-group input,
@@ -271,4 +342,21 @@ button:hover,
     border-radius: 4px;
     background-color: #f9d6d5;
     color: #b42318;
+}
+
+.checkbox-group {
+    margin-bottom: 0.5rem;
+}
+
+.posts-filter fieldset {
+    box-sizing: border-box;
+    width: fit-content;
+    max-width: 100%;
+    margin: 2rem 0;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    text-align: left;
+    position: sticky;
+    top: 6rem;
 }

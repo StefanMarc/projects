@@ -1,24 +1,22 @@
 <nav>
-    <ul>
-       <li><a href="{{ route('posts.index') }}">Home</a></li>
-       <li><a href="{{ route('posts.create') }}">Write a new post</a></li>
-       <li><a href="{{ route('categories.index') }}">Categories</a></li>
-       <li><a href="{{ route('my.posts') }}">My Posts</a></li>
-    </ul>
-    <ul>
+    <div class="nav-container">
+        <ul class="nav-links">
+            <li><a href="{{ route('posts.index') }}">Home</a></li>
+            <li><a href="{{ route('posts.create') }}">Write a new post</a></li>
+            <li><a href="{{ route('categories.index') }}">Categories</a></li>
+            <li><a href="{{ route('my.posts') }}">My Posts</a></li>
+        </ul>
+        <div class="nav-auth">
         @auth
-            <li>
-                <form action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit">Logout</button>
-                </form>
-            </li>
+            <form action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit">Logout</button>
+            </form>
         @else
-            <li>
-                <form action="{{ route('login') }}" method="GET">
-                    <button type="submit">Login</button>
-                </form>
-            </li>
+            <form action="{{ route('login') }}" method="GET">
+                <button type="submit">Login</button>
+            </form>
         @endauth
-    </ul>
+        </div>
+    </div>
 </nav>

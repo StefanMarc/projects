@@ -51,6 +51,8 @@ class PostController extends Controller
         $post->title = $request->input('title');
         $post->content = $request->input('content');
         $post->user_id = Auth::id();
+        $post->image_path = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
+        $post->premium = $request->boolean('premium');
         $post->save();
         $post->categories()->attach($request->input('categories', []));
 
@@ -69,7 +71,7 @@ class PostController extends Controller
         // ->get();
 
         // second method, also works
-        $comments = $post->comments()->orderBy('created_at', 'desc')->get();
+        $comments = $post->comments()->with('user')->orderBy('created_at', 'desc')->get();
 
         // dd($comments);
 
@@ -90,6 +92,7 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
+        $post->image_path = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
         $post->update($request->all());
         $post->categories()->sync($request->input('categories', []));
         // dd($request->all());

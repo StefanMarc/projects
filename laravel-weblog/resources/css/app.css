@@ -111,6 +111,11 @@ button:hover,
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.04);
 }
 
+.post-card-premium {
+    background-color: #F6F1E3;
+    border-color: #C7B47A;
+}
+
 .post-link {
     display: block;
     width: 100%;
@@ -250,10 +255,13 @@ button:hover,
     display: flex;
     flex-direction: column;
     gap: 0.35rem;
+    margin: 0 0 1rem;
 }
 
-.field-group + .field-group {
-    margin-top: 1rem;
+.post-form fieldset {
+    box-sizing: border-box;
+    width: 100%;
+    margin: 0 0 1rem;
 }
 
 .field-group input,
@@ -348,15 +356,31 @@ button:hover,
     margin-bottom: 0.5rem;
 }
 
+fieldset {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 0.5rem;
+}
+
 .posts-filter fieldset {
     box-sizing: border-box;
     width: fit-content;
     max-width: 100%;
     margin: 2rem 0;
-    padding: 1rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
     text-align: left;
     position: sticky;
     top: 6rem;
+}
+
+.image-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.image-wrapper img {
+    max-width: min(100%, 760px);
+    max-height: 70vh;
+    height: auto;
+    object-fit: contain;
 }

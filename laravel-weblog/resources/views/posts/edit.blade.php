@@ -4,7 +4,7 @@
 
 @section('content')
     <h1>Editing post...</h1>
-    <form class="post-form" action="{{ route('posts.update', $post) }}" method="POST">
+    <form class="post-form" action="{{ route('posts.update', $post) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
 

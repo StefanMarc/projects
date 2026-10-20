@@ -3,6 +3,12 @@
 @section('title', 'Page Title')
 
 @section('content')
+    <section class="image-wrapper">
+        @if ($post->image_path)
+            <img src="{{ Storage::url($post->image_path) }}" alt="Post image">
+        @endif
+    </section>
+
     <section class="post-detail-wrapper">
         <article class="post-detail">
             <h2>{{ $post->title }}</h2>
@@ -13,19 +19,25 @@
             @include('partials.auth-actions')
         </article>
     </section>
-
-
+    
     <section class="create-comment">
-        <h2>Write a comment</h2>
-        <form class="post-form" action="{{ route('comment.store', $post) }}" method="POST">
-            @csrf
-            <div class="field-group">
-                <label for="comment">Your comment:</label>
-                <textarea name="comment" id="comment" required placeholder="enter your text here"></textarea>
-            </div>
-            <button type="submit">Opslaan</button>
-        </form>
+        @if (!auth()->check())
+            <p class="login-prompt">Please <a href="{{ route('login') }}">log in</a> to write a comment.</p>
+        @endif
+
+        @auth
+            <h2>Write a comment</h2>
+            <form class="post-form" action="{{ route('comment.store', $post) }}" method="POST">
+                @csrf
+                <div class="field-group">
+                    <label for="comment">Your comment:</label>
+                    <textarea name="comment" id="comment" required placeholder="enter your text here"></textarea>
+                </div>
+                <button type="submit">Opslaan</button>
+            </form>
+        @endauth
     </section>
+    
 
     <section class="comments-wrapper">
         <h2>Comments</h2>
@@ -34,7 +46,7 @@
                 <article class="comment">
                     <p>{{ $comment->comment }}</p>
                     <div class="comment-meta">
-                        <span class="comment-author">User name</span>
+                        <span class="comment-author">{{ $comment->user->name }}</span>
                         <time datetime="{{ $comment->created_at->toISOString() }}">
                             {{ $comment->created_at->format('d-m-Y H:i') }}
                         </time>

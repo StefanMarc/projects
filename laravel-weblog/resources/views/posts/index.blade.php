@@ -10,7 +10,7 @@
 
         <div class="posts-container">
             @foreach ($posts as $post)
-                <article class="post-card">
+                <article class="post-card {{ $post->premium ? 'post-card-premium' : '' }}">
                     <a class="post-link" href="{{ route('posts.show', $post) }}">
                         <div class="post-summary">
                             <div class="post-heading">

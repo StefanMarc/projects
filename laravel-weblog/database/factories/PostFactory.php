@@ -23,7 +23,7 @@ class PostFactory extends Factory
             'title' => $this->faker->sentence(),
             'content' => $this->faker->paragraphs(3, true),
             'user_id' => User::inRandomOrder()->first()->id,
-            
+            'premium' => $this->faker->boolean(20),
         ];
     }
 }

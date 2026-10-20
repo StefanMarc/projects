@@ -19,17 +19,6 @@
     >{{ old('content', $post->content) }}</textarea>
 </div>
 
-<!-- <div class="field-group">
-    <label for="categories">Categories</label>
-    <select name="categories[]" id="categories" multiple size="5" selected>
-        @foreach ($categories as $category)
-            <option value="{{ $category->id }}" {{ in_array($category->id, old('categories', $post->categories->pluck('id')->toArray())) ? 'selected' : '' }}>
-                {{ $category->name }}
-            </option>
-        @endforeach
-    </select>
-</div> -->
-
 <fieldset>
     <legend>Categories</legend>
     @foreach ($categories as $category)
@@ -44,6 +33,27 @@
             <label for="category-{{ $category->id }}">{{ $category->name }}</label>
         </div>
     @endforeach
+</fieldset>
+
+<fieldset>
+    <legend for="image">Add an image</legend>
+    <input
+        type="file"
+        name="image"
+        id="image"
+        accept="image/*"
+    >
+    <img id="image-preview" alt="No previous image"
+        @if ($post->image_path)
+            src="{{ Storage::url($post->image_path) }}"
+        @endif
+    >
+</fieldset>
+
+<fieldset>
+    <legend for="premium">Premium</legend>
+    <input type="checkbox" id="premium" name="premium" value="1" 
+    @checked(old('premium', $post->premium))>
 </fieldset>
 
 <div class="actions">

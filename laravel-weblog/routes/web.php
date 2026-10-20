@@ -48,12 +48,12 @@ Route::middleware(['auth'])->group(function () {
         Route::delete('/categories/{category}', 'destroy')->name('categories.destroy');
     });
     
+    // CommentController routes
+    Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment.store');
 });
 
     
-// CommentController routes
 
-Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment.store');
 
 
 // User authentication routes

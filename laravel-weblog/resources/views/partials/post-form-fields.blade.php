@@ -36,6 +36,16 @@
 </fieldset>
 
 <fieldset>
+    <legend for="premium">Premium</legend>
+    <input type="checkbox"
+    id="premium"
+    name="premium"
+    value="1" 
+    {{ old('premium', $post->premium) ? 'checked' : '' }}
+    >
+</fieldset>
+
+<fieldset>
     <legend for="image">Add an image</legend>
     <input
         type="file"
@@ -48,12 +58,6 @@
             src="{{ Storage::url($post->image_path) }}"
         @endif
     >
-</fieldset>
-
-<fieldset>
-    <legend for="premium">Premium</legend>
-    <input type="checkbox" id="premium" name="premium" value="1" 
-    @checked(old('premium', $post->premium))>
 </fieldset>
 
 <div class="actions">

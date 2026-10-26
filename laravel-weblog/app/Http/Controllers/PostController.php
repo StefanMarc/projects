@@ -24,9 +24,16 @@ class PostController extends Controller
         $categories = Category::all();
 
         $selectedCategories = $request->query('categories', []);
+        $premium = $request->query('premium');
+
+        // dd($selectedCategories, $premium);
 
         $postsQuery = Post::with('categories')->orderBy('created_at', 'desc');
         $postsQuery = $this->filterByCategories($postsQuery, $selectedCategories);
+
+        if ($premium) {
+            $postsQuery->where('premium', '=', 1);
+        }
 
         $posts = $postsQuery->get();
 
@@ -65,15 +72,13 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        // first method, works
-        // $comments = DB::table('comments')
-        // ->where('post_id', '=', $post->id)
-        // ->get();
+        if ($post->premium && (!Auth::check() || !Auth::user()->premium)) {
+            return redirect()->route('premium');
+            // NEEDS FIXING
+            // ->with('message', 'You need a premium account to view this post.');
+        }
 
-        // second method, also works
         $comments = $post->comments()->with('user')->orderBy('created_at', 'desc')->get();
-
-        // dd($comments);
 
         return view('posts.show', compact('post', 'comments'));
     }
@@ -140,5 +145,7 @@ class PostController extends Controller
 
         return $postsQuery;
     }
+
+    
 
 }

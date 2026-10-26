@@ -5,6 +5,7 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommentController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\UserController;
 use App\Models\Post;
 
 // Public routes
@@ -18,7 +19,6 @@ Route::controller(PostController::class)->group(function () {
     // Showing single post
     Route::get('/posts/{post}', 'show')->whereNumber('post')->name('posts.show');
 });
-
 
 // Protected routes
 Route::middleware(['auth'])->group(function () {
@@ -50,11 +50,13 @@ Route::middleware(['auth'])->group(function () {
     
     // CommentController routes
     Route::post('/posts/{post}', [CommentController::class, 'store'])->name('comment.store');
+
+    // User premium settings routes
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/premium/subscribe', 'edit')->name('premium');
+        Route::put('/premium', 'update')->name('user.upgrade');
+    });
 });
-
-    
-
-
 
 // User authentication routes
 Route::controller(LoginController::class)->group(function () {

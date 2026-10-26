@@ -19,13 +19,22 @@
         <button type="submit">Log in</button>
     </form>
 
-    @if ($errors->any())
+    @if ($errors->any() || session('message'))
         <div class="error-messages">
             <ul>
                 @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                 @endforeach
+                <li>{{ session('message') }}</li>
             </ul>
         </div>
     @endif
+
+    <p>free user:<br>
+   free@example.com<br>
+   Password<br>
+   <br>
+   premium user:<br>
+   premium@example.com<br>
+   Password</p>
 @endsection

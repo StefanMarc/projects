@@ -11,11 +11,23 @@
 
     <section class="post-detail-wrapper">
         <article class="post-detail">
-            <h2>{{ $post->title }}</h2>
-            <time datetime="{{ $post->created_at->toISOString() }}">
-                {{ $post->created_at->format('d-m-Y H:i') }}
-            </time>
-            <p>{{ $post->content }}</p>
+            <div class="post-detail-header">
+                <h2>{{ $post->title }}</h2>
+                <time datetime="{{ $post->created_at->toISOString() }}">
+                    {{ $post->created_at->format('d-m-Y H:i') }}
+                </time>
+                @if ($post->categories)
+                    <div class="post-categories">
+                        @foreach ($post->categories as $category)
+                            <span>{{ $category->name }}</span>
+                        @endforeach
+                    </div>
+                @endif
+            </div>
+
+            <div class="post-detail-content">
+                <p>{{ $post->content }}</p>
+            </div>
             @include('partials.auth-actions')
         </article>
     </section>

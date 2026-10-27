@@ -35,15 +35,17 @@
     @endforeach
 </fieldset>
 
-<fieldset>
-    <legend for="premium">Premium</legend>
-    <input type="checkbox"
-    id="premium"
-    name="premium"
-    value="1" 
-    {{ old('premium', $post->premium) ? 'checked' : '' }}
-    >
-</fieldset>
+@if (Auth::check() && Auth::user()->premium)
+    <fieldset>
+        <legend for="premium">Premium</legend>
+        <input type="checkbox"
+        id="premium"
+        name="premium"
+        value="1" 
+        {{ old('premium', $post->premium) ? 'checked' : '' }}
+        >
+    </fieldset>
+@endif
 
 <fieldset>
     <legend for="image">Add an image</legend>

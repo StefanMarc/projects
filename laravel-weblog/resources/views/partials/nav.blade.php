@@ -5,7 +5,7 @@
             <li><a href="{{ route('posts.create') }}">Write a new post</a></li>
             <li><a href="{{ route('categories.index') }}">Categories</a></li>
             <li><a href="{{ route('my.posts') }}">My Posts</a></li>
-            <li><a href="{{ route('premium') }}">get premium</a></li>
+            <li><a href="{{ route('premium') }}">Get premium</a></li>
         </ul>
         <div class="nav-auth">
         @auth

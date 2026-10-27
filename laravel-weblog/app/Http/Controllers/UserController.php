@@ -53,7 +53,10 @@ class UserController extends Controller
     public function update(Request $request)
     {
         $user = $request->user();
-        $user->premium = true;
+        // dd($request->premium);
+        // $user->premium = ($request->premium) ? true : false;
+        $user->premium = $request->boolean('premium');
+        // dd($user->premium);
         $user->save();
 
         return redirect()->route('posts.index');

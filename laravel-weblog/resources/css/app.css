@@ -154,6 +154,14 @@ button:hover,
     font-size: 0.875rem;
 }
 
+.post-categories.post-categories-index {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+}
+
 .post-summary time {
     white-space: nowrap;
 }
@@ -196,6 +204,11 @@ button:hover,
     text-align: left;
 }
 
+.post-detail-header {
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
 .post-detail h2 {
     margin-top: 0;
     margin-bottom: 0.5rem;
@@ -204,9 +217,28 @@ button:hover,
 
 .post-detail time {
     display: block;
-    margin-bottom: 1rem;
-    text-align: center;
     color: #555;
+}
+
+.post-categories {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.post-categories span {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid #ccc;
+    border-radius: 999px;
+    background: #f3f3f3;
+    font-size: 0.85rem;
+}
+
+.post-detail-content {
+    padding-top: 1rem;
 }
 
 .post-detail p {
@@ -383,4 +415,24 @@ fieldset {
     max-height: 70vh;
     height: auto;
     object-fit: contain;
+}
+
+.premium-page {
+    width: min(100%, 60rem);
+    margin: 2rem auto;
+}
+
+.premium-page form {
+    margin: 0;
+}
+
+.premium-signup {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 1rem;
+}
+
+.premium-signup .checkbox-group {
+    margin-bottom: 0.75rem;
 }

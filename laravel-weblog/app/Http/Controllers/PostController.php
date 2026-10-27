@@ -8,7 +8,8 @@ use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Comment;
-
+use App\Http\Requests\StorePostRequest;
+use App\Http\Requests\UpdatePostRequest;
 // for testing:
 use Illuminate\Support\Facades\DB;
 
@@ -52,19 +53,25 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(StorePostRequest $request)
     {
+        $validated = $request->validated();
+
         $post = new Post();
-        $post->title = $request->input('title');
-        $post->content = $request->input('content');
+        
         $post->user_id = Auth::id();
-        $post->image_path = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
+
+        $post->title = $validated['title'];
+        $post->content = $validated['content'];
         $post->premium = $request->boolean('premium');
+
+        $post->image_path = $request->hasFile('image') ? $request->file('image')->store('images', 'public') : null;
+        
         $post->save();
-        $post->categories()->attach($request->input('categories', []));
+
+        $post->categories()->attach($validated['categories'] ?? []);
 
         return redirect()->route('posts.index');
-
     }
 
     /**
@@ -95,12 +102,24 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(UpdatePostRequest $request, Post $post)
     {
-        $post->image_path = $request->file('image') ? $request->file('image')->store('images', 'public') : null;
-        $post->update($request->all());
+        $validated = $request->validated();
+
+        $post->fill([
+            'title' => $validated['title'],
+            'content' => $validated['content'],
+            'premium' => $request->boolean('premium'),
+        ]);
+
+        if ($request->hasFile('image')) {
+            $post->image_path = $request->file('image')->store('images', 'public');
+        }
+        
+        $post->save();
+
         $post->categories()->sync($request->input('categories', []));
-        // dd($request->all());
+
         return redirect()->route('posts.show', $post);
     }
 

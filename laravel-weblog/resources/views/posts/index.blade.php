@@ -16,11 +16,11 @@
                             <div class="post-heading">
                                 <h2>{{ $post->title }}</h2>
                                 @if ($post->categories)
-                                    <p class="post-category">
+                                    <div class="post-categories post-categories-index">
                                         @foreach ($post->categories as $category)
-                                            {{ $category->name }}
+                                            <span>{{ $category->name }}</span>
                                         @endforeach
-                                    </p>
+                                    </div>
                                 @endif
                             </div>
                             <time datetime="{{ $post->created_at->toISOString() }}">

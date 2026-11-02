@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+use App\Http\Requests\UpdatePremiumRequest;
 
 class UserController extends Controller
 {
@@ -42,24 +44,25 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit()
+    public function edit(User $user)
     {
-        return view('premium');
+        abort_unless(Auth::user()->id === $user->id, 403, 'Unauthorized action.');
+
+        return view('premium', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request)
+    public function update(UpdatePremiumRequest $request, User $user)
     {
-        $user = $request->user();
-        // dd($request->premium);
-        // $user->premium = ($request->premium) ? true : false;
         $user->premium = $request->boolean('premium');
-        // dd($user->premium);
+
         $user->save();
 
-        return redirect()->route('posts.index');
+        // $redirectUrl = session('intended_post', route('posts.index'));
+        
+        return redirect()->intended(route('posts.index'));
     }
 
     /**

@@ -10,7 +10,7 @@
     </section>
 
     <section class="post-detail-wrapper">
-        <article class="post-detail">
+        <article class="post-detail {{ $post->premium ? 'post-detail-premium' : '' }}">
             <div class="post-detail-header">
                 <h2>{{ $post->title }}</h2>
                 <time datetime="{{ $post->created_at->toISOString() }}">

@@ -204,6 +204,11 @@ button:hover,
     text-align: left;
 }
 
+.post-detail-premium {
+    background-color: #F6F1E3;
+    border-color: #C7B47A;
+}
+
 .post-detail-header {
     margin-bottom: 1rem;
     text-align: center;

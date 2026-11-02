@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Models\Comment;
 use App\Http\Requests\StorePostRequest;
 use App\Http\Requests\UpdatePostRequest;
+use App\Http\Requests\DeletePostRequest;
 // for testing:
 use Illuminate\Support\Facades\DB;
 
@@ -79,10 +80,20 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
+        session()->put('url.intended', route('posts.show', $post));
+
         if ($post->premium && (!Auth::check() || !Auth::user()->premium)) {
-            return redirect()->route('premium');
-            // NEEDS FIXING
-            // ->with('message', 'You need a premium account to view this post.');
+
+            if (Auth::check()) {
+                return redirect()
+                ->route('premium', ['user' => Auth::id()])
+                ->with('message', 'You need a premium account to view this post.');
+            }
+
+
+            return redirect()
+                ->route('login')
+                ->with('message', 'Please log in to access premium content.');
         }
 
         $comments = $post->comments()->with('user')->orderBy('created_at', 'desc')->get();
@@ -127,7 +138,7 @@ class PostController extends Controller
      * Remove the specified resource from storage.
      */
     // public function destroy(string $id) = w/o route model binding
-    public function destroy(Post $post)
+    public function destroy(DeletePostRequest $request, Post $post)
 
     {
         $post->delete();

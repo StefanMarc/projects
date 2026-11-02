@@ -53,8 +53,8 @@ Route::middleware(['auth'])->group(function () {
 
     // User premium settings routes
     Route::controller(UserController::class)->group(function () {
-        Route::get('/premium/subscribe', 'edit')->name('premium');
-        Route::put('/premium', 'update')->name('user.upgrade');
+        Route::get('/premium/{user}', 'edit')->name('premium');
+        Route::put('/premium/{user}', 'update')->name('user.upgrade');
     });
 });
 

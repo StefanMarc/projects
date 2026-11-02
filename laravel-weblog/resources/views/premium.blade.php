@@ -7,7 +7,7 @@
     <h1>You are in luck, premium is free!</h1>
     <div class="premium-page">
         <p>Test it out indefinitely by signing up below.</p>
-        <form action="{{ route('user.upgrade') }}" method="POST">
+        <form action="{{ route('user.upgrade', ['user' => Auth::id()]) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -29,7 +29,7 @@
     <h1>We are sorry to see you go.</h1>
     <div class="premium-page">
         <p>Unsubscribe by clicking the button below.</p>
-        <form action="{{ route('user.upgrade') }}" method="POST">
+        <form action="{{ route('user.upgrade', ['user' => Auth::id()]) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -45,6 +45,17 @@
                 <button type="submit">Cancel subscription</button>
             </fieldset>
         </form>
+    </div>
+@endif
+
+@if ($errors->any() || session('message'))
+    <div class="error-messages">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+            <li>{{ session('message') }}</li>
+        </ul>
     </div>
 @endif
 

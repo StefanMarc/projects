@@ -5,7 +5,11 @@
             <li><a href="{{ route('posts.create') }}">Write a new post</a></li>
             <li><a href="{{ route('categories.index') }}">Categories</a></li>
             <li><a href="{{ route('my.posts') }}">My Posts</a></li>
-            <li><a href="{{ route('premium') }}">Get premium</a></li>
+            @auth
+                <li><a href="{{ route('premium', ['user' => Auth::id()]) }}">Get premium</a></li>
+            @else
+                <li><a href="{{ route('login') }}">Get premium</a></li>
+            @endauth
         </ul>
         <div class="nav-auth">
         @auth

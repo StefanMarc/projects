@@ -59,7 +59,7 @@ class PostController extends Controller
         $validated = $request->validated();
 
         $post = new Post();
-        
+        // TO DO!
         $post->user_id = Auth::id();
 
         $post->title = $validated['title'];
@@ -92,8 +92,8 @@ class PostController extends Controller
 
 
             return redirect()
-                ->route('login')
-                ->with('message', 'Please log in to access premium content.');
+            ->route('login')
+            ->with('message', 'Please log in to access premium content.');
         }
 
         $comments = $post->comments()->with('user')->orderBy('created_at', 'desc')->get();
